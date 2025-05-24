@@ -50,7 +50,7 @@ jobs:
         uses: bsord/helm-push@v4
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
-          access-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           registry-url: registry-1.docker.io
           chart-folder: ${{ matrix.pg_flyway_migrate_folder }}
 
