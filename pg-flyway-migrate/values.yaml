@@ -37,13 +37,14 @@ migrations:
     username: git_username
     repository: /project/app.git
     ref: master
-
   ## Additional arguments for flyway
   extraArgs: []
   ## Init containers to run before migration
   initContainers: []
   ## Extra environment variables
   extraEnvVars: []
+## @section Job control
+  ttlSecondsAfterFinished: 86400
 
 ## @section Database connection parameters
 ##
