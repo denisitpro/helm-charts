@@ -1,4 +1,4 @@
-image: flyway:latest
+image: flyway/flyway:11.8.1
 migrations:
   gitUsername: git_username
   gitHost: git.example.com
