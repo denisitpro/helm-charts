@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        pg_flyway_migrate: ['pg-flyway-migrate']
+        pg_flyway_migrate_folder: ['pg-flyway-migrate']
 
 
     steps:
@@ -31,20 +31,20 @@ jobs:
 
       - name: Set chart version into Chart.yaml
         run: |
-          yq e -i ".version = \"${CHART_VERSION}\"" "${{ matrix.pg_flyway_migrate }}/Chart.yaml"
-          yq e -i ".appVersion = \"${FLYWAY_VERSION}\"" "${{ matrix.pg_flyway_migrate }}/Chart.yaml"
-          cat "${{ matrix.pg_flyway_migrate }}/Chart.yaml"
+          yq e -i ".version = \"${CHART_VERSION}\"" "${{ matrix.pg_flyway_migrate_folder }}/Chart.yaml"
+          yq e -i ".appVersion = \"${FLYWAY_VERSION}\"" "${{ matrix.pg_flyway_migrate_folder }}/Chart.yaml"
+          cat "${{ matrix.pg_flyway_migrate_folder }}/Chart.yaml"
 
       - name: Set app versions in values.yaml
         run: |
-          yq e -i ".flywayImage.tag = \"${CHART_VERSION}\"" "${{ matrix.pg_flyway_migrate }}/values.yaml"
-          yq e -i ".postgresql.tag = \"${CHART_VERSION}\"" "${{ matrix.pg_flyway_migrate }}/values.yaml"
-          yq e -i ".gitImage.tag = \"${CHART_VERSION}\"" "${{ matrix.pg_flyway_migrate }}/values.yaml"
-          cat "${{ matrix.pg_flyway_migrate }}/values.yaml"
+          yq e -i ".flywayImage.tag = \"${FLYWAY_VERSION}\"" "${{ matrix.pg_flyway_migrate_folder }}/values.yaml"
+          yq e -i ".postgresql.tag = \"${POSTGRESQL_VERSION}\"" "${{ matrix.pg_flyway_migrate_folder }}/values.yaml"
+          yq e -i ".gitImage.tag = \"${GIT_VERSION}\"" "${{ matrix.pg_flyway_migrate_folder }}/values.yaml"
+          cat "${{ matrix.pg_flyway_migrate_folder }}/values.yaml"
 
       - name: Package Helm chart
         run: |
-          helm package ${{ matrix.pg_flyway_migrate }} --destination .
+          helm package ${{ matrix.pg_flyway_migrate_folder }} --destination .
 
 #      - name: Login to OCI registry
 #        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | helm registry login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin registry-1.docker.io
