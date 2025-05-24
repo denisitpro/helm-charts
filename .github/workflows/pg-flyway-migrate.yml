@@ -46,13 +46,15 @@ jobs:
         run: |
           helm package ${{ matrix.pg_flyway_migrate_folder }} --destination .
 
+
+      - name: Login to Helm OCI registry
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" > pwd.txt
+          helm registry login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-file pwd.txt registry-1.docker.io
+
       - name: Push Helm chart to OCI
-        uses: bsord/helm-push@v4
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          registry-url: registry-1.docker.io
-          chart-folder: ${{ matrix.pg_flyway_migrate_folder }}
+        run: |
+          helm push pg-flyway-migrate-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
