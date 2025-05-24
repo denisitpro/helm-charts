@@ -46,18 +46,18 @@ jobs:
         run: |
           helm package ${{ matrix.pg_flyway_migrate_folder }} --destination .
 
-#      - name: Login to OCI registry
-#        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | helm registry login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin registry-1.docker.io
-#
-#      - name: Push Helm chart to OCI
-#        run: |
-#          helm push pg-flyway-migrate-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USER }}
-#
-#      - name: Create GitHub Release
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          tag_name: "pg-flyway-migrate-${{ env.CHART_VERSION }}"
-#          name: "pg-flyway-migrate ${{ env.CHART_VERSION }}"
-#          files: "pg-flyway-migrate-${{ env.CHART_VERSION }}.tgz"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to OCI registry
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | helm registry login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin registry-1.docker.io
+
+      - name: Push Helm chart to OCI
+        run: |
+          helm push pg-flyway-migrate-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USER }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "pg-flyway-migrate-${{ env.CHART_VERSION }}"
+          name: "pg-flyway-migrate ${{ env.CHART_VERSION }}"
+          files: "pg-flyway-migrate-${{ env.CHART_VERSION }}.tgz"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
