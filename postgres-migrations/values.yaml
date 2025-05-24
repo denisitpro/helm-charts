@@ -1,0 +1,13 @@
+image: flyway:latest
+migrations:
+  gitUsername: git_username
+  gitHost: git.example.com
+  gitPath: /project/app.git
+  gitRef: master
+
+db:
+  host: postgres
+  port: 5432
+  dbname: db1
+  user: postgres
+  password: set_me
