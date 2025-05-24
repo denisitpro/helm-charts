@@ -3,9 +3,14 @@ kind: Job
 metadata:
   name: {{ .Values.nameOverride | default (printf "%s-migrate" .Release.Name) }}
   namespace: {{ printf "%s-%s" .Values.name .Values.namespace }}
+  labels:
+    {{- include "pg-flyway-migrate.labels" . | nindent 4 }}
 spec:
   ttlSecondsAfterFinished: 86400
   template:
+    metadata:
+      labels:
+        {{- include "pg-flyway-migrate.labels" . | nindent 8 }}
     spec:
       restartPolicy: Never
       serviceAccountName: default
