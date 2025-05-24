@@ -9,7 +9,7 @@ on:
 jobs:
   publish:
     container:
-      image: denisitpro/net-tools:latest
+      image: denisitpro/net-tools:1.3
     runs-on: ubuntu-latest
 
     strategy:
