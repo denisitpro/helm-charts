@@ -1,8 +1,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pgm-app
-  namespace: {{ .Values.name }}-{{ .Values.namespace }}
+  name: {{ .Values.nameOverride | default (printf "%s-migrate" .Release.Name) }}
+  namespace: {{ printf "%s-%s" .Values.name .Values.namespace }}
 spec:
   ttlSecondsAfterFinished: 86400
   template:
@@ -40,7 +40,7 @@ spec:
 
       containers:
         - name: flyway
-          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.flywayImage.registry }}/{{ .Values.flywayImage.repository }}:{{ .Values.flywayImage.tag }}"
           command: [ "flyway" ]
           args:
             - -url=jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.dbName }}?user={{ .Values.db.user }}&password={{ .Values.db.password }}
