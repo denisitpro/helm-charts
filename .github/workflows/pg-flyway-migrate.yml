@@ -51,8 +51,7 @@ jobs:
 
       - name: Login to Helm OCI registry
         run: |
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" > pwd.txt
-          helm registry login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-file pwd.txt registry-1.docker.io
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | helm registry login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin registry-1.docker.io
 
       - name: Push Helm chart to OCI
         run: |
