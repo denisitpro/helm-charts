@@ -3,8 +3,8 @@ name: publish pg-flyway-migrate
 on:
   push:
     paths:
-      - '**/*'  # only debug
-#      - pg-flyway-migrate/version.txt
+#      - '**/*'  # only debug
+      - pg-flyway-migrate/version.txt
 
 jobs:
   publish:
