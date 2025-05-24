@@ -6,3 +6,4 @@
 .DS_Store
 *.log
 *.tgz
+override.yml
