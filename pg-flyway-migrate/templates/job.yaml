@@ -11,7 +11,7 @@ spec:
       serviceAccountName: default
       initContainers:
         - name: ensure-db
-          image: "{{ .Values.global.imageRegistry }}bitnami/postgresql:14.17.0"
+          image: "{{ .Values.postgresql.registry }}/{{ .Values.postgresql.repository }}:{{ .Values.postgresql.tag }}"
           command: ["/bin/sh"]
           args:
             - -c
@@ -22,7 +22,7 @@ spec:
             - name: PGPASSWORD
               value: "{{ .Values.db.password }}"
         - name: clone-migrations
-          image: alpine/git
+          image: "{{ .Values.gitImage.registry }}/{{ .Values.gitImage.repository }}:{{ .Values.gitImage.tag }}"
           command: ["/bin/sh"]
           args:
             - -c
