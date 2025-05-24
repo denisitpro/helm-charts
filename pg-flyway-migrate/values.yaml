@@ -1,13 +1,59 @@
-image: flyway/flyway:11.8.1
-migrations:
-  gitUsername: git_username
-  gitHost: git.example.com
-  gitPath: /project/app.git
-  gitRef: master
+## @section Global parameters
+## Global Docker image parameters
+##
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
 
+## @section Common parameters
+## Flyway image parameters
+##
+image:
+  registry: docker.io
+  repository: flyway/flyway
+  tag: 11.8.1
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+## @section Flyway migration settings
+##
+migrations:
+  enabled: true
+  git:
+    host: git.example.com
+    username: git_username
+    repository: /project/app.git
+    ref: master
+
+  ## Additional arguments for flyway
+  extraArgs: []
+  ## Init containers to run before migration
+  initContainers: []
+  ## Extra environment variables
+  extraEnvVars: []
+
+## @section Database connection parameters
+##
 db:
   host: postgres
   port: 5432
-  dbname: db1
+  dbName: db1
   user: postgres
-  password: set_me
+  password: "set_me"
+
+## @section Resource parameters
+##
+resources:
+  limits: {}
+  requests: {}
+
+## @section Pod security context
+##
+#podSecurityContext:
+#  enabled: true
+#  fsGroup: 1001
+#
+#containerSecurityContext:
+#  enabled: true
+#  runAsUser: 1001

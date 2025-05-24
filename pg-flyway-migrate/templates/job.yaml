@@ -11,13 +11,13 @@ spec:
       serviceAccountName: default
       initContainers:
         - name: ensure-db
-          image: bitnami/postgresql:14.17.0
+          image: "{{ .Values.global.imageRegistry }}bitnami/postgresql:14.17.0"
           command: ["/bin/sh"]
           args:
             - -c
             - |
-              psql -h {{ .Values.db.host }} -p {{ .Values.db.port }} -U {{ .Values.db.user }} -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='{{ .Values.db.dbname}}'" | grep -q 1 || \
-              createdb -h {{ .Values.db.host }} -p {{ .Values.db.port }} -U {{ .Values.db.user }} {{ .Values.db.dbname}}
+              psql -h {{ .Values.db.host }} -p {{ .Values.db.port }} -U {{ .Values.db.user }} -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='{{ .Values.db.dbName}}'" | grep -q 1 || \
+              createdb -h {{ .Values.db.host }} -p {{ .Values.db.port }} -U {{ .Values.db.user }} {{ .Values.db.dbName}}
           env:
             - name: PGPASSWORD
               value: "{{ .Values.db.password }}"
@@ -27,7 +27,7 @@ spec:
           args:
             - -c
             - |
-              git clone --branch {{ .Values.migrations.gitRef }} https://{{ .Values.migrations.gitUsername }}:${GIT_TOKEN}@{{ .Values.migrations.gitHost }}{{ .Values.migrations.gitPath }} /flyway/sql/migrations
+              git clone --branch {{ .Values.migrations.git.ref }} https://{{ .Values.migrations.git.username }}:${GIT_TOKEN}@{{ .Values.migrations.git.host }}{{ .Values.migrations.git.repository }} /flyway/sql/migrations
           env:
             - name: GIT_TOKEN
               valueFrom:
@@ -40,15 +40,16 @@ spec:
 
       containers:
         - name: flyway
-          image: {{ .Values.image }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: [ "flyway" ]
           args:
-            - -url=jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.dbname}}?user={{ .Values.db.user }}&password={{ .Values.db.password }}
+            - -url=jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.dbName }}?user={{ .Values.db.user }}&password={{ .Values.db.password }}
             - -locations=filesystem:/flyway/sql/migrations
             - migrate
           volumeMounts:
             - name: migration-volume
               mountPath: /flyway/sql/migrations
+          resources: {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: migration-volume
           emptyDir: {}
