@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.nameOverride | default (printf "%s-migrate-job" .Release.Name) }}
-  namespace: {{ printf "%s-%s" .Values.name .Values.namespace }}
+  namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "pg-flyway-migrate.labels" . | nindent 4 }}
 spec:

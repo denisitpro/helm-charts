@@ -32,3 +32,13 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 helm.sh/chart: {{ include "pg-flyway-migrate.chart" . }}
 {{- end }}
+{{/*
+Return the target namespace
+*/}}
+{{- define "common.names.namespace" -}}
+{{- if .Values.namespaceOverride }}
+{{- .Values.namespaceOverride | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- .Release.Namespace }}
+{{- end }}
+{{- end }}

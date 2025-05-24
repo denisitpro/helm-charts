@@ -6,6 +6,11 @@ global:
   imagePullSecrets: []
   storageClass: ""
 
+## @section Common Names
+##
+name: ""
+namespaceOverride: ""
+
 ## @section Common parameters
 ## Flyway image parameters
 ##
