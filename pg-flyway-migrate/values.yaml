@@ -9,7 +9,7 @@ global:
 ## @section Common parameters
 ## Flyway image parameters
 ##
-image:
+flywayImage:
   registry: docker.io
   repository: flyway/flyway
   tag: 11.8.1
