@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Values.nameOverride | default (printf "%s-migrate" .Release.Name) }}
+  name: {{ .Values.nameOverride | default (printf "%s-migrate-job" .Release.Name) }}
   namespace: {{ printf "%s-%s" .Values.name .Values.namespace }}
   labels:
     {{- include "pg-flyway-migrate.labels" . | nindent 4 }}
 spec:
-  ttlSecondsAfterFinished: 86400
+  ttlSecondsAfterFinished: {{ .Values.migrations.ttlSecondsAfterFinished }}
   template:
     metadata:
       labels:
