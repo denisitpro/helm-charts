@@ -52,8 +52,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           access-token: ${{ secrets.DOCKERHUB_TOKEN }}
           registry-url: registry-1.docker.io
-          chart-folder: .
-          chart-name: pg-flyway-migrate
+          chart-folder: ${{ matrix.pg_flyway_migrate_folder }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
