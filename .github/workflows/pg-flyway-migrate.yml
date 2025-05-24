@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '**/*'  # only debug
-#      - "pg-flyway-migrate/version.txt
+#      - pg-flyway-migrate/version.txt
 
 jobs:
   publish:
@@ -46,12 +46,14 @@ jobs:
         run: |
           helm package ${{ matrix.pg_flyway_migrate_folder }} --destination .
 
-      - name: Login to OCI registry
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | helm registry login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin registry-1.docker.io
-
       - name: Push Helm chart to OCI
-        run: |
-          helm push pg-flyway-migrate-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USER }}
+        uses: bsord/helm-push@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          access-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry-url: registry-1.docker.io
+          chart-folder: .
+          chart-name: pg-flyway-migrate
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
