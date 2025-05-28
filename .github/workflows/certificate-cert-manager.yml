@@ -3,8 +3,8 @@ name: publish certificate-cert-manager
 on:
   push:
     paths:
-      - '**/*'  # only debug
-#      - certificate-cert-manager/version.txt
+#      - '**/*'  # only debug
+      - certificate-cert-manager/Chart.yaml
 
 jobs:
   publish:
@@ -28,11 +28,6 @@ jobs:
           echo "CHART_VERSION=$(yq e '.version' Chart.yaml)" >> $GITHUB_ENV
           echo "TIMESTAMP=$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
           echo "CHART_VERSION=$(yq e '.version' Chart.yaml)"
-
-      - name: Set chart version into Chart.yaml
-        run: |
-          yq e -i ".version = \"${CHART_VERSION}\"" ${{ matrix.ci_cd_folder }}/Chart.yaml
-          cat ${{ matrix.ci_cd_folder }}/Chart.yaml
 
       - name: Package Helm chart
         run: |
