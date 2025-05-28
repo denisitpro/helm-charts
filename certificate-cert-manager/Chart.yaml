@@ -1,6 +1,5 @@
 apiVersion: v2
-name: create
-description: Helm chart to initialize PostgreSQL databases and run Flyway migrations
+name: certificate-cert-manager
+description: Helm chart to create certificate
 type: application
-version: 0.1.2
-appVersion: "11.8.1"
+version: 0.4.0
