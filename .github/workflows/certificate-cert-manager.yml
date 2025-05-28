@@ -24,7 +24,8 @@ jobs:
       - name: Extract chart version
         id: vars
         run: |
-          cd certificate-cert-manager
+          cd ${{ matrix.ci_cd_folder }}
+          echo "CHART_VERSION=$(yq e '.chart' version.txt)" >> $GITHUB_ENV
           echo "TIMESTAMP=$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
       - name: Set chart version into Chart.yaml
