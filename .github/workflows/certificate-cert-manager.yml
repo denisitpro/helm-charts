@@ -36,6 +36,7 @@ jobs:
       - name: Package Helm chart
         run: |
           helm package ${{ matrix.ci_cd_folder }} --destination .
+          ls -la
 
       - name: Login to Helm OCI registry
         run: |
@@ -43,6 +44,7 @@ jobs:
 
       - name: Push Helm chart to OCI
         run: |
+          ls -la
           helm push certificate-cert-manager-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}
 
       - name: Create GitHub Release
