@@ -25,8 +25,9 @@ jobs:
         id: vars
         run: |
           cd ${{ matrix.ci_cd_folder }}
-          echo "CHART_VERSION=$(yq e '.chart' version.txt)" >> $GITHUB_ENV
+          echo "CHART_VERSION=$(yq e '.version' Chart.yaml)" >> $GITHUB_ENV
           echo "TIMESTAMP=$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+          echo "CHART_VERSION=$(yq e '.version' Chart.yaml)"
 
       - name: Set chart version into Chart.yaml
         run: |
