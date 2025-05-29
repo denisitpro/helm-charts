@@ -38,3 +38,5 @@ The following parameters configure how Flyway handles migration files:
 - `git.username`: Username used to authenticate against the Git host.
 - `git.repository`: Repository path (e.g., `/team/project.git`).
 - `git.ref`: Branch or tag to checkout.
+
+---
