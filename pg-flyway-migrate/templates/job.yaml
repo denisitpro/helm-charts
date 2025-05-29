@@ -32,7 +32,8 @@ spec:
           args:
             - -c
             - |
-              git clone --branch {{ .Values.migrations.git.ref }} https://{{ .Values.migrations.git.username }}:${GIT_TOKEN}@{{ .Values.migrations.git.host }}{{ .Values.migrations.git.repository }} /flyway/sql/migrations
+              git clone --branch {{ .Values.migrations.git.ref }} https://{{ .Values.migrations.git.username }}:${GIT_TOKEN}@{{ .Values.migrations.git.host }}{{ .Values.migrations.git.repository }} /tmp/clone
+              cp -r /tmp/clone/address/migrations /flyway/sql/migrations
               ls -la /flyway/sql/migrations
           env:
             - name: GIT_TOKEN
