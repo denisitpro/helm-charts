@@ -26,11 +26,17 @@ db:
   dbName: dbname
   user: postgres
   password: "securePassword"
-
-migrations:
-  git:
-    host: git.example.com
-    username: readonly
-    repository: /rnd/dbname.git
-    ref: master
 ```
+
+### Flyway Migrations Configuration
+
+The following parameters configure how Flyway handles migration files:
+
+- `enabled`: Whether to enable Flyway-based migrations.
+- `migration_path`: Relative path inside the cloned Git repository to the folder containing Flyway SQL migrations. Defaults to `migrations`.
+- `git.host`: Git host to clone the repository from.
+- `git.username`: Username used to authenticate against the Git host.
+- `git.repository`: Repository path (e.g., `/team/project.git`).
+- `git.ref`: Branch or tag to checkout.
+
+---

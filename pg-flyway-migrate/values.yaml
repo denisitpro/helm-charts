@@ -37,6 +37,7 @@ gitImage:
 ##
 migrations:
   enabled: true
+  migration_path: migrations
   git:
     host: git.example.com
     username: git_username
