@@ -33,6 +33,7 @@ spec:
             - -c
             - |
               git clone --branch {{ .Values.migrations.git.ref }} https://{{ .Values.migrations.git.username }}:${GIT_TOKEN}@{{ .Values.migrations.git.host }}{{ .Values.migrations.git.repository }} /tmp/clone
+              ls -la
               cp -r /tmp/clone/address/migrations /flyway/sql/migrations
               ls -la /flyway/sql/migrations
           env:
