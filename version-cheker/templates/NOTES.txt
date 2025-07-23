@@ -1,9 +1,10 @@
-A certificate resource has been created by this chart.
+CronJob {{ include "common.names.name" . }} has been created.
 
-Certificate name: {{ .Values.name | default (printf "%s-cert" .Release.Name) }}
-Secret name: {{ .Values.certificate.secretName }}
-Namespace: {{ .Values.namespaceOverride | default .Release.Namespace }}
+To list upcoming schedules:
+  kubectl get cronjob {{ include "common.names.name" . }} -n {{ .Release.Namespace }} -o json | jq -r .spec.schedule
 
-To check the status of the certificate:
+To check the latest job status:
+  kubectl get jobs --selector=job-name={{ include "common.names.name" . }} -n {{ .Release.Namespace }}
 
-  kubectl describe certificate {{ .Values.name | default (printf "%s-cert" .Release.Name) }} -n {{ .Values.namespaceOverride | default .Release.Namespace }}
+To check logs of the last run:
+  kubectl logs job/$(kubectl get jobs -n {{ .Release.Namespace }} --sort-by=.metadata.creationTimestamp -o jsonpath="{.items[-1:].metadata.name}")

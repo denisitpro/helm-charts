@@ -34,7 +34,6 @@ spec:
                     | @tsv
                   ' | while IFS=$'\t' read -r ns appname pod_name reg ver; do
                     cluster="$CLUSTER"
-                    echo "[DEBUG] cluster=$cluster ns=$ns app=$appname pod=$pod_name reg=$reg ver=$ver" >&2
                     printf "INSERT INTO infra.k8s_versions (cluster, namespace, appname, pod_name, registry_path, version) FORMAT Values\n('%s','%s','%s','%s','%s','%s')\n" "$cluster" "$ns" "$appname" "$pod_name" "$reg" "$ver" | \
                     curl --silent --show-error -X POST --data-binary @- \
                       "{{ .Values.cronjob.clickhouseUrl }}"
