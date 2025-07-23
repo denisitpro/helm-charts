@@ -1,11 +1,11 @@
-name: publish version-cheker
+name: publish version-checker
 
 on:
   push:
     paths:
       - '**/*'  # only debug
       - .github/workflows/version-checker.yml
-#      - version-cheker/Chart.yaml
+#      - version-checker/Chart.yaml
 
 jobs:
   publish:
@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        ci_cd_folder: ['version-cheker']
+        ci_cd_folder: ['version-checker']
 
 
     steps:
@@ -42,13 +42,13 @@ jobs:
       - name: Push Helm chart to OCI
         run: |
           ls -la
-          helm push version-cheker-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}
+          helm push version-checker-${CHART_VERSION}.tgz oci://registry-1.docker.io/${{ secrets.DOCKERHUB_USERNAME }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "version-cheker-${{ env.CHART_VERSION }}"
-          name: "version-cheker ${{ env.CHART_VERSION }}"
-          files: "version-cheker-${{ env.CHART_VERSION }}.tgz"
+          tag_name: "version-checker-${{ env.CHART_VERSION }}"
+          name: "version-checker ${{ env.CHART_VERSION }}"
+          files: "version-checker-${{ env.CHART_VERSION }}.tgz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
