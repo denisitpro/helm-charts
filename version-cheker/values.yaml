@@ -26,3 +26,7 @@ image:
   tag: "1.6"
 
 clusterName: cluster-name
+
+serviceAccount:
+  create: true
+  name: "pod-version-reader"
