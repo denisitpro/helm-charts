@@ -7,3 +7,5 @@
 *.log
 *.tgz
 override.yml
+value.yaml
+value.yml
