@@ -7,10 +7,16 @@ metadata:
     {{- include "common.labels.standard" . | nindent 4 }}
 spec:
   schedule: {{ .Values.cronjob.schedule | quote }}
+  concurrencyPolicy: {{ .Values.cronjob.concurrencyPolicy }}
+  successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: {{ .Values.cronjob.ttlSecondsAfterFinished }}
       template:
+        metadata:
+          labels:
+            {{- include "common.labels.standard" . | nindent 12 }}
         spec:
           containers:
             - name: reporter
